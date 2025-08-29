@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Produk Minol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.15);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f8de7e 0%, #d4af37 50%, #b8860b 100%);
+        }
+        .wine-gradient {
+            background: linear-gradient(135deg, #722f37 0%, #8b0000 50%, #800020 100%);
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+                border-radius: 0.5rem;
+    }
+    #gol3 form {
+        background-color: #ffe4e6; /* pink-100 */
+        border: 2px solid #ef4444; /* red-500 */
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+    /* Override input border color on focus per golongan */
+    #gol1 form input:focus, #gol1 form select:focus {
+        border-color: #d4af37;
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+    }
+    #gol2 form input:focus, #gol2 form select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    #gol3 form input:focus, #gol3 form select:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+    }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="wine-gradient text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-wine-bottle text-2xl text-red-800"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">Sistem Manajemen Produk Minol</h2>
+                </div>
+                <div class="text-xs">
+                    <span id="current-date" class="bg-white bg-opacity-20 px-0 py-1 rounded-full"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Input Nama Usaha -->
+<div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Usaha</label>
+    <input type="text" id="nama-usaha" 
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+        placeholder="Contoh: Toko Anggur Jaya" required>
+</div>
+        <!-- Tabs Navigation -->
+        <div class="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
+            <div class="flex flex-wrap border-b">
+                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-amber-50 transition-colors border-b-2 border-transparent hover:border-amber-400 active" data-tab="gol1">
+                    <i class="fas fa-1 mr-2 text-amber-600"></i>Golongan 1
+                <p class="mt-0,1 text-xs italic text-gray-600">*Kadar alkohol 5% - 15%</p>
+                </button>
+                
+                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-amber-50 transition-colors border-b-2 border-transparent hover:border-amber-400" data-tab="gol2">
+                    <i class="fas fa-2 mr-2 text-amber-600"></i>Golongan 2
+                <p class="mt-0,1 text-xs italic text-gray-600">*Kadar alkohol 15% - 30%</p>
+                </button>
+                
+                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-amber-50 transition-colors border-b-2 border-transparent hover:border-amber-400" data-tab="gol3">
+                    <i class="fas fa-3 mr-2 text-amber-600"></i>Golongan 3
+                <p class="mt-0,1 text-xs italic text-gray-600">*Kadar alkohol >30%</p>
+                </button>
+                
+            </div>
+
+            <!-- Golongan 1 Form -->
+            <div id="gol1" class="tab-content active p-6">
+                <form id="form-gol1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Produk</label>
+                        <input type="text" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Wine Merlot">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Volume (ml)</label>
+                        <input type="number" name="volume" required min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="750">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stok Masuk</label>
+                        <input type="number" name="stok_masuk" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stok Tersedia</label>
+                        <input type="number" name="stok_tersedia" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="80">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pemasok</label>
+                        <input type="text" name="pemasok" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Nama Pemasok">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="gold-gradient text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity w-full">
+                            <i class="fas fa-plus mr-2"></i>Tambah Produk
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Golongan 2 Form -->
+            <div id="gol2" class="tab-content p-6">
+                <form id="form-gol2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Produk</label>
+                        <input type="text" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Vodka Absolute">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Volume (ml)</label>
+                        <input type="number" name="volume" required min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="1000">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stok Masuk</label>
+                        <input type="number" name="stok_masuk" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="150">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stok Tersedia</label>
+                        <input type="number" name="stok_tersedia" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="120">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pemasok</label>
+                        <input type="text" name="pemasok" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Nama Pemasok">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="gold-gradient text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity w-full">
+                            <i class="fas fa-plus mr-2"></i>Tambah Produk
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Golongan 3 Form -->
+            <div id="gol3" class="tab-content p-6">
+                <form id="form-gol3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Produk</label>
+                        <input type="text" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Whiskey Jack Daniels">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Volume (ml)</label>
+                        <input type="number" name="volume" required min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="700">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stok Masuk</label>
+                        <input type="number" name="stok_masuk" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="200">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Stok Tersedia</label>
+                        <input type="number" name="stok_tersedia" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="180">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pemasok</label>
+                        <input type="text" name="pemasok" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Nama Pemasok">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="gold-gradient text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity w-full">
+                            <i class="fas fa-plus mr-2"></i>Tambah Produk
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-gray-800">Daftar Produk Minol</h2>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600" id="total-products">0 produk</span>
+                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors" onclick="clearAllProducts()">
+                        <i class="fas fa-trash mr-2"></i>Hapus Semua
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Golongan</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Nama Produk</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Volume (ml)</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Stok Masuk</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Stok Tersedia</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Stok Terjual</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Pemasok</th>
+                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body" class="divide-y divide-gray-200">
+                        <!-- Data akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button id="submit-btn" class="wine-gradient text-white px-8 py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg">
+                <i class="fas fa-file-excel mr-3"></i>Kirim Data
+            </button>
+            <p class="text-sm text-gray-600 mt-2">Data akan disimpan dalam format spreadsheet yang dapat diunduh</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Sistem Manajemen Produk Minol. Dinas Perdagangan dan Perindustrian.</p>
+            <p class="text-gray-400 text-sm mt-2">Kabupaten Barito Utara</p>
+        </div>
+    </footer>
+
+    <script>
+    // Data storage
+    let products = JSON.parse(localStorage.getItem('minol_products')) || [];
+
+    // Initialize date
+    document.getElementById('current-date').textContent = new Date().toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    // Tab functionality
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active', 'border-amber-400'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            button.classList.add('active', 'border-amber-400');
+            document.getElementById(button.dataset.tab).classList.add('active');
+        });
+    });
+
+    // Form submission
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const golongan = form.id.replace('form-', '');
+
+            const product = {
+                id: Date.now(),
+                golongan: golongan.toUpperCase(),
+                nama: formData.get('nama'),
+                volume: parseInt(formData.get('volume')),
+                stok_masuk: parseInt(formData.get('stok_masuk')),
+                stok_tersedia: parseInt(formData.get('stok_tersedia')),
+                stok_terjual: parseInt(formData.get('stok_masuk')) - parseInt(formData.get('stok_tersedia')),
+                pemasok: formData.get('pemasok'),
+                timestamp: new Date().toISOString()
+            };
+
+            if (product.stok_masuk < product.stok_tersedia) {
+                alert('Stok tersedia tidak boleh lebih besar dari stok masuk!');
+                return;
+            }
+
+            products.push(product);
+            saveProducts();
+            updateTable();
+            form.reset();
+
+            showNotification(`Produk "${product.nama}" berhasil ditambahkan ke ${product.golongan}`, 'success');
+        });
+    });
+
+    // Save products
+    function saveProducts() {
+        localStorage.setItem('minol_products', JSON.stringify(products));
+    }
+
+    // Update products table
+    function updateTable() {
+        const tbody = document.getElementById('products-table-body');
+        const totalElement = document.getElementById('total-products');
+
+        tbody.innerHTML = '';
+        totalElement.textContent = `${products.length} produk`;
+
+        if (products.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="px-4 py-8 text-center text-gray-500">
+                        <i class="fas fa-inbox text-4xl mb-2 text-gray-300"></i>
+                        <p>Belum ada produk. Silakan tambah produk melalui form di atas.</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        products.forEach((product, index) => {
+            const row = document.createElement('tr');
+            row.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+            row.innerHTML = `
+                <td class="px-4 py-3 text-sm font-medium text-gray-900">${product.golongan}</td>
+                <td class="px-4 py-3 text-sm text-gray-900">${product.nama}</td>
+                <td class="px-4 py-3 text-sm text-gray-900">${product.volume.toLocaleString()} ml</td>
+                <td class="px-4 py-3 text-sm text-gray-900">${product.stok_masuk.toLocaleString()}</td>
+                <td class="px-4 py-3 text-sm text-gray-900">${product.stok_tersedia.toLocaleString()}</td>
+                <td class="px-4 py-3 text-sm font-semibold ${product.stok_terjual > 0 ? 'text-green-600' : 'text-gray-600'}">
+                    ${product.stok_terjual.toLocaleString()}
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-900">${product.pemasok}</td>
+                <td class="px-4 py-3 text-sm">
+                    <button onclick="deleteProduct(${product.id})" class="text-red-600 hover:text-red-800 transition-colors">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // Delete product
+    function deleteProduct(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+            products = products.filter(product => product.id !== id);
+            saveProducts();
+            updateTable();
+            showNotification('Produk berhasil dihapus', 'success');
+        }
+    }
+
+    // Clear all
+    function clearAllProducts() {
+        if (products.length === 0) {
+            alert('Tidak ada produk yang bisa dihapus.');
+            return;
+        }
+        if (confirm('Apakah Anda yakin ingin menghapus SEMUA produk?')) {
+            products = [];
+            saveProducts();
+            updateTable();
+            showNotification('Semua produk berhasil dihapus', 'success');
+        }
+    }
+
+    // Show notification
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white font-semibold z-50 transform transition-transform duration-300 ${
+            type === 'success' ? 'bg-green-600' : 'bg-blue-600'
+        }`;
+        notification.textContent = message;
+        notification.style.transform = 'translateX(100%)';
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Kirim ke Spreadsheet
+    async function sendToSpreadsheet() {
+        if (products.length === 0) {
+            alert('Tidak ada data produk untuk dikirim.');
+            return;
+        }
+        const namaUsaha = document.getElementById('nama-usaha').value.trim();
+        if (!namaUsaha) {
+            alert('Silakan isi Nama Usaha terlebih dahulu.');
+            return;
+        }
+        const payload = { namaUsaha: namaUsaha, produk: products };
+        try {
+            const response = await fetch("https://script.google.com/macros/s/AKfycbzTmWYYcEF8fgGyhiXGnSUwGWabtjq-HpWw1D5a1Yuyew9KXjaQ8PBeDtaXp0jolHYF/exec", {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: { "Content-Type": "application/json" }
+            });
+            const result = await response.text();
+            showNotification(result, "success");
+        } catch (error) {
+            console.error("Error:", error);
+            showNotification("Gagal mengirim data ke Spreadsheet", "error");
+        }
+    }
+    document.getElementById('submit-btn').addEventListener('click', sendToSpreadsheet);
+
+    // Init table on load
+    document.addEventListener('DOMContentLoaded', updateTable);
+</script>
+
+</body>
+</html>
+
