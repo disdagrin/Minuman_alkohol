@@ -193,22 +193,29 @@
         </div>
     </div>
 
-    <script>
+   <script>
     // Ganti dengan URL Web App Google Apps Script Anda
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0Sisp8bqMYvscIA3eD-PoJwcmu0l5KrcjByXOEpyoe-1rEdvBGnFKWi6oRaWISy7Dkg/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwyz3Wa-SAOyDrYaNdWcKuonR6JhDpqj6LYMfpHS86dtedYkn6mD446yMbUtOORY5IM/exec";
 
     const form = document.getElementById('formData');
     const fileInput = document.getElementById('izinUsahaFile');
     const fileName = document.getElementById('fileName');
     const submitBtn = document.getElementById('submitBtn');
     const loadingOverlay = document.getElementById('loadingOverlay');
+    const fileUploadArea = document.getElementById('fileUploadArea');
+
+    // klik area upload langsung buka file chooser
+    fileUploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // tampilkan nama file
+    fileInput.addEventListener('change', () => {
+        fileName.textContent = fileInput.files[0]?.name || "";
+    });
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-fileUploadArea.addEventListener('click', () => {
-    fileInput.click();
-});
 
         if (!fileInput.files[0]) {
             alert('Silakan upload file izin usaha');
@@ -220,29 +227,24 @@ fileUploadArea.addEventListener('click', () => {
 
         try {
             const file = fileInput.files[0];
-
-            // Konversi file ke Base64
             const base64File = await toBase64(file);
 
-            // Buat payload JSON
-            const payload = {
-                namaUsaha: form.namaUsaha.value,
-                penanggungJawab: form.penanggungJawab.value,
-                alamat: form.alamat.value,
-                noTelp: form.noTelp.value,
-                fileName: file.name,
-                fileType: file.type,
-                fileData: base64File
-            };
+            // Buat FormData
+            const formData = new FormData();
+            formData.append("namaUsaha", form.namaUsaha.value);
+            formData.append("penanggungJawab", form.penanggungJawab.value);
+            formData.append("alamat", form.alamat.value);
+            formData.append("noTelp", form.noTelp.value);
+            formData.append("fileName", file.name);
+            formData.append("fileType", file.type);
+            formData.append("fileData", base64File);
 
-            // Kirim ke Apps Script
+            // Kirim ke Apps Script (pakai FormData, tanpa headers)
             const response = await fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify(payload)
-});
-const result = await response.json();
-
-
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
 
             if (result.success) {
                 alert('Data berhasil disimpan! File tersimpan di: ' + result.fileUrl);
@@ -271,6 +273,7 @@ const result = await response.json();
         });
     }
 </script>
+
 
 </body>
 </html>
