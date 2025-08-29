@@ -195,7 +195,7 @@
 
     <script>
     // Ganti dengan URL Web App Google Apps Script Anda
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtFK7I7ZRBLXQE_6jZoS7d68_bb_z9GgWfvg8ES0fw3HzsjtkMN9mysGIq8zbbuc26/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0Sisp8bqMYvscIA3eD-PoJwcmu0l5KrcjByXOEpyoe-1rEdvBGnFKWi6oRaWISy7Dkg/exec";
 
     const form = document.getElementById('formData');
     const fileInput = document.getElementById('izinUsahaFile');
@@ -237,12 +237,11 @@ fileUploadArea.addEventListener('click', () => {
 
             // Kirim ke Apps Script
             const response = await fetch(SCRIPT_URL, {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
+    method: "POST",
     body: JSON.stringify(payload)
 });
-
 const result = await response.json();
+
 
 
             if (result.success) {
