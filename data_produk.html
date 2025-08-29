@@ -395,35 +395,40 @@
 
     // Kirim ke Spreadsheet
     async function sendToSpreadsheet() {
-        if (products.length === 0) {
-            alert('Tidak ada data produk untuk dikirim.');
-            return;
-        }
-        const namaUsaha = document.getElementById('nama-usaha').value.trim();
-        if (!namaUsaha) {
-            alert('Silakan isi Nama Usaha terlebih dahulu.');
-            return;
-        }
-        const payload = { namaUsaha: namaUsaha, produk: products };
-        try {
-            const response = await fetch("https://script.google.com/macros/s/AKfycbzTmWYYcEF8fgGyhiXGnSUwGWabtjq-HpWw1D5a1Yuyew9KXjaQ8PBeDtaXp0jolHYF/exec", {
-    method: "POST",
-    mode: "no-cors", // 🔑 cegah CORS error
-    body: JSON.stringify(payload),
-    headers: { "Content-Type": "application/json" }
-});
-
-            showNotification("✅ Data berhasil dikirim ke Spreadsheet!", "success");
-
-        } catch (error) {
-            console.error("Error:", error);
-            showNotification("Gagal mengirim data ke Spreadsheet", "error");
-        }
+    if (products.length === 0) {
+        alert('Tidak ada data produk untuk dikirim.');
+        return;
     }
-    document.getElementById('submit-btn').addEventListener('click', sendToSpreadsheet);
+    const namaUsaha = document.getElementById('nama-usaha').value.trim();
+    if (!namaUsaha) {
+        alert('Silakan isi Nama Usaha terlebih dahulu.');
+        return;
+    }
 
-    // Init table on load
-    document.addEventListener('DOMContentLoaded', updateTable);
+    const payload = { namaUsaha: namaUsaha, produk: products };
+
+    try {
+        await fetch("https://script.google.com/macros/s/AKfycbyISW3Jb-gASgPDSRjBD4QEcivJ-3b2TNpUuV8KBAVAt_ot4qyeb6UzLFrdzo9QxVA/exec", {
+            method: "POST",
+            mode: "no-cors",   // 🔑 cegah error CORS
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        // Karena pakai no-cors, kita tidak bisa baca response dari GAS
+        showNotification("✅ Data berhasil dikirim ke Spreadsheet!", "success");
+
+        // Optional: kosongkan produk setelah terkirim
+        products = [];
+        saveProducts();
+        updateTable();
+
+    } catch (error) {
+        console.error("Error:", error);
+        showNotification("❌ Gagal mengirim data ke Spreadsheet", "error");
+    }
+}
+document.getElementById('submit-btn').addEventListener('click', sendToSpreadsheet);
 </script>
 
 </body>
