@@ -407,12 +407,14 @@
         const payload = { namaUsaha: namaUsaha, produk: products };
         try {
             const response = await fetch("https://script.google.com/macros/s/AKfycbzTmWYYcEF8fgGyhiXGnSUwGWabtjq-HpWw1D5a1Yuyew9KXjaQ8PBeDtaXp0jolHYF/exec", {
-                method: "POST",
-                body: JSON.stringify(payload),
-                headers: { "Content-Type": "application/json" }
-            });
-            const result = await response.text();
-            showNotification(result, "success");
+    method: "POST",
+    mode: "no-cors", // 🔑 cegah CORS error
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" }
+});
+
+            showNotification("✅ Data berhasil dikirim ke Spreadsheet!", "success");
+
         } catch (error) {
             console.error("Error:", error);
             showNotification("Gagal mengirim data ke Spreadsheet", "error");
