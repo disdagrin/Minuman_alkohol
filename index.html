@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,8 +8,55 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+.tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 50px rgba(139, 69, 19, 0.15);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #f8de7e 0%, #d4af37 50%, #b8860b 100%);
+        }
+        .wine-gradient {
+            background: linear-gradient(135deg, hsl(119, 42%, 32%) 0%, hsl(92, 88%, 56%) 50%, #0717cb 100%);
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+                border-radius: 0.5rem;
+    }
+    #gol3 form {
+        background-color: #ffe4e6; /* pink-100 */
+        border: 2px solid #ef4444; /* red-500 */
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+    /* Override input border color on focus per golongan */
+    #gol1 form input:focus, #gol1 form select:focus {
+        border-color: #d4af37;
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+    }
+    #gol2 form input:focus, #gol2 form select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    #gol3 form input:focus, #gol3 form select:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+    }
+
         .form-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -17,7 +65,7 @@
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: #ffffffe8;
             backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -36,12 +84,12 @@
         }
         
         .file-upload:hover {
-            border-color: #764ba2;
-            background: rgba(102, 126, 234, 0.05);
+            border-color: #f2eef6;
+            background: #0029de68;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0737e3 0%, #4c07b3 100%);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -57,7 +105,7 @@
         }
         
         .btn-secondary {
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            background: linear-gradient(135deg, #f1a808 0%, #f1a808 100%);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -73,18 +121,18 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-white">
     <header class="wine-gradient text-white py-6">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
-                        <i class="fas fa-wine-bottle text-2xl text-red-800"></i>
+                        <img src="logo.png">
                     </div>
-                    <h2 class="text-2xl font-bold">Sistem Manajemen Produk Minol</h2>
+                    <h2 class="text-2xl font-bold text-center">Formulir Pendataan Minuman Beralkohol</h2>
                 </div>
                 <div class="text-xs">
-                    <span id="current-date" class="bg-white bg-opacity-20 px-0 py-1 rounded-full"></span>
+                    <span id="current-date" class="bg-white bg-opacity-20 px-1 py-1 rounded-full"></span>
                 </div>
             </div>
         </div>
@@ -92,10 +140,6 @@
     <div class="form-container">
         <div class="glass-card">
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">
-                    <i class="fas fa-wine-bottle text-purple-600 mr-3"></i>
-                    Formulir Pendataan Minuman Beralkohol
-                </h1>
                 <p class="text-gray-600">Lengkapi data usaha minuman beralkohol Anda dengan benar</p>
             </div>
 
@@ -205,6 +249,12 @@
             </div>
         </div>
     </div>
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Sistem Manajemen Produk Minol. Dinas Perdagangan dan Perindustrian.</p>
+            <p class="text-gray-400 text-sm mt-2">Kabupaten Barito Utara</p>
+        </div>
+    </footer>
 
    <script>
     // Ganti dengan URL Web App Google Apps Script Anda
@@ -293,4 +343,3 @@
 
 </body>
 </html>
-
