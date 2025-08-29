@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -19,13 +20,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .custom-shadow {
-            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.15);
+            box-shadow: 0 4px 50px rgba(139, 69, 19, 0.15);
         }
         .gold-gradient {
             background: linear-gradient(135deg, #f8de7e 0%, #d4af37 50%, #b8860b 100%);
         }
         .wine-gradient {
-            background: linear-gradient(135deg, #722f37 0%, #8b0000 50%, #800020 100%);
+            background: linear-gradient(135deg, hsl(119, 42%, 32%) 0%, hsl(92, 88%, 56%) 50%, #0717cb 100%);
         }
         input:focus, select:focus {
             outline: none;
@@ -53,6 +54,21 @@
         border-color: #ef4444;
         box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
     }
+    .btn-primary {
+            background: linear-gradient(135deg, #0737e3 0%, #4c07b3 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -62,12 +78,12 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
-                        <i class="fas fa-wine-bottle text-2xl text-red-800"></i>
+                        <img src="logo.png">
                     </div>
                     <h2 class="text-2xl font-bold">Sistem Manajemen Produk Minol</h2>
                 </div>
-                <div class="text-xs">
-                    <span id="current-date" class="bg-white bg-opacity-20 px-0 py-1 rounded-full"></span>
+                <div class="text-xs font-bold">
+                    <span id="current-date" class="bg-white bg-opacity-0 px-0 py-1 rounded-full"></span>
                 </div>
             </div>
         </div>
@@ -231,10 +247,10 @@
 
         <!-- Submit Button -->
         <div class="text-center">
-            <button id="submit-btn" class="wine-gradient text-white px-8 py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg">
+            <button id="submit-btn" class="btn-primary flex-1">
                 <i class="fas fa-file-excel mr-3"></i>Kirim Data
             </button>
-            <p class="text-sm text-gray-600 mt-2">Data akan disimpan dalam format spreadsheet yang dapat diunduh</p>
+            <p class="text-sm text-gray-600 mt-2">Pastikan Data ditabel Benar Sebelum Klik Kirim</p>
         </div>
     </main>
 
@@ -433,4 +449,3 @@ document.getElementById('submit-btn').addEventListener('click', sendToSpreadshee
 
 </body>
 </html>
-
