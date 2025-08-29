@@ -152,16 +152,7 @@
                         Izin Usaha (Upload File) *
                     </label>
                     <div class="file-upload" id="fileUploadArea">
-                        <input 
-                            type="file" 
-                            id="izinUsahaFile" 
-                            name="file"
-                            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" 
-                            required 
-                            class="hidden"
-                            >
-
-
+                        <input type="file" id="izinUsahaFile" name="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
                         <div class="text-center">
                             <i class="fas fa-cloud-upload-alt text-4xl text-purple-600 mb-3"></i>
                             <p class="text-sm text-gray-600 mb-2">Klik untuk mengupload file izin usaha</p>
@@ -215,6 +206,10 @@
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+fileUploadArea.addEventListener('click', () => {
+    fileInput.click();
+});
 
         if (!fileInput.files[0]) {
             alert('Silakan upload file izin usaha');
