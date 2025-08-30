@@ -4,10 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Pendataan Minuman Beralkohol</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Formulir Pendataan Usaha Minuman Beralkohol</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+/* Toast Styles */
+    .toast {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      min-width: 250px;
+      max-width: 350px;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      color: white;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast-success { background: #16a34a; } /* green */
+    .toast-error { background: #dc2626; }   /* red */
+
 .tab-content {
             display: none;
         }
@@ -34,7 +55,6 @@
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
         }
                 border-radius: 0.5rem;
-    }
     #gol3 form {
         background-color: #ffe4e6; /* pink-100 */
         border: 2px solid #ef4444; /* red-500 */
@@ -68,10 +88,10 @@
             background: #ffffffe8;
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(15, 14, 14, 0.105);
             padding: 2rem;
             width: 100%;
-            max-width: 600px;
+            max-width: 1000px;
         }
         
         .file-upload {
@@ -85,7 +105,7 @@
         
         .file-upload:hover {
             border-color: #f2eef6;
-            background: #0029de68;
+            background: #0029de1a;
         }
         
         .btn-primary {
@@ -100,8 +120,11 @@
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            border-color: #f2eef6;
+            color:#17120193;
+            background: linear-gradient(135deg, #0737e3c5 0%, #4c07b3bb 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(2, 27, 249, 0.112);
         }
         
         .btn-secondary {
@@ -116,9 +139,20 @@
         }
         
         .btn-secondary:hover {
-            transform: translateY(-2px);
+            border-color: #f2eef6;
+            color:#17120180;
+            background: linear-gradient(135deg, #f1a708e1 0%, #f1a708a9 100%);
+            transform: translateY(-3px);
             box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
         }
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+        
+
     </style>
 </head>
 <body class="bg-white">
@@ -129,7 +163,7 @@
                     <div class="w-14 h-15 bg-transparent rounded-full flex items-center justify-center mr-3">
                         <img src="logo.png">
                     </div>
-                    <h2 class="text-2xl font-bold text-center">Formulir Pendataan Minuman Beralkohol</h2>
+                    <h2 class="text-2xl font-bold text-center">Formulir Pendataan Usaha Minuman Beralkohol</h2>
                 </div>
                 <div class="text-xs font-bold">
                     <span id="current-date" class="bg-white bg-opacity-0 px-0 py-1 rounded-full"></span>
@@ -137,7 +171,7 @@
             </div>
         </div>
     </header>
-    <div class="form-container">
+    <div class="form-container mx-auto px-4 py-4">
         <div class="glass-card">
             <div class="text-center mb-8">
                 <p class="text-gray-600">Lengkapi data usaha minuman beralkohol Anda dengan benar</p>
@@ -211,7 +245,7 @@
                         Izin Usaha (Upload File) *
                     </label>
                     <div class="file-upload" id="fileUploadArea">
-                        <input type="file" id="izinUsahaFile" name="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                        <input type="file" id="izinUsahaFile" name="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required class="hidden">
                         <div class="text-center">
                             <i class="fas fa-cloud-upload-alt text-4xl text-purple-600 mb-3"></i>
                             <p class="text-sm text-gray-600 mb-2">Klik untuk mengupload file izin usaha</p>
@@ -240,13 +274,8 @@
                 </div>
             </form>
 
-            <!-- Loading Overlay -->
-            <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div class="bg-white rounded-lg p-6 text-center">
-                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-                    <p class="text-gray-700">Mengirim data...</p>
-                </div>
-            </div>
+           
+            
         </div>
     </div>
     <footer class="bg-gray-800 text-white py-8 mt-12">
@@ -255,96 +284,110 @@
             <p class="text-gray-400 text-sm mt-2">Kabupaten Barito Utara</p>
         </div>
     </footer>
-
+    <!-- Loading Overlay -->
+            <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg p-6 text-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+                    <p class="text-gray-700">Mengirim data...</p>
+                </div>
+            </div>
+<div id="toastContainer"></div>
    <script>
-    // Ganti dengan URL Web App Google Apps Script Anda
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwyz3Wa-SAOyDrYaNdWcKuonR6JhDpqj6LYMfpHS86dtedYkn6mD446yMbUtOORY5IM/exec";
 
     const form = document.getElementById('formData');
     const fileInput = document.getElementById('izinUsahaFile');
     const fileName = document.getElementById('fileName');
     const submitBtn = document.getElementById('submitBtn');
-    const loadingOverlay = document.getElementById('loadingOverlay');
     const fileUploadArea = document.getElementById('fileUploadArea');
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
-    // klik area upload langsung buka file chooser
-    fileUploadArea.addEventListener('click', () => {
-        fileInput.click();
-    });
+    // Fungsi Toast
+    function showToast(message, type = "success") {
+      const toast = document.createElement("div");
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      document.getElementById("toastContainer").appendChild(toast);
+      setTimeout(() => toast.classList.add("show"), 100);
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
+    }
+
+    // Klik area upload → buka file chooser
+    fileUploadArea.addEventListener('click', () => fileInput.click());
 
     // tampilkan nama file
     fileInput.addEventListener('change', () => {
-        fileName.textContent = fileInput.files[0]?.name || "";
+      fileName.textContent = fileInput.files[0]?.name || "";
     });
 
+    // submit form
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+      e.preventDefault();
+      if (!fileInput.files[0]) {
+        showToast("Silakan upload file izin usaha", "error");
+        return;
+      }
 
-        if (!fileInput.files[0]) {
-            alert('Silakan upload file izin usaha');
-            return;
+      submitBtn.disabled = true;
+      loadingOverlay.classList.remove("hidden");
+
+      try {
+        const file = fileInput.files[0];
+        if (file.size > 5 * 1024 * 1024) {
+          showToast("Ukuran file maksimal 5MB", "error");
+          return;
         }
 
-        loadingOverlay.classList.remove('hidden');
-        submitBtn.disabled = true;
+        const base64File = await toBase64(file);
+        const formData = new FormData();
+        formData.append("namaUsaha", form.namaUsaha.value);
+        formData.append("penanggungJawab", form.penanggungJawab.value);
+        formData.append("alamat", form.alamat.value);
+        formData.append("noTelp", form.noTelp.value);
+        formData.append("fileName", file.name);
+        formData.append("fileType", file.type);
+        formData.append("fileData", base64File);
 
-        try {
-            const file = fileInput.files[0];
-            const base64File = await toBase64(file);
+        const response = await fetch(SCRIPT_URL, { method: "POST", body: formData });
+        const result = await response.json();
 
-            // Buat FormData
-            const formData = new FormData();
-            formData.append("namaUsaha", form.namaUsaha.value);
-            formData.append("penanggungJawab", form.penanggungJawab.value);
-            formData.append("alamat", form.alamat.value);
-            formData.append("noTelp", form.noTelp.value);
-            formData.append("fileName", file.name);
-            formData.append("fileType", file.type);
-            formData.append("fileData", base64File);
-
-            // Kirim ke Apps Script (pakai FormData, tanpa headers)
-            const response = await fetch(SCRIPT_URL, {
-                method: "POST",
-                body: formData
-            });
-            const result = await response.json();
-
-            if (result.success) {
-                alert('Data berhasil disimpan! File tersimpan di: ' + result.fileUrl);
-                form.reset();
-                fileName.textContent = '';
-            } else {
-                throw new Error(result.message || 'Gagal menyimpan data');
-            }
-
-        } catch (error) {
-            alert('Error: ' + error.message);
-            console.error('Error:', error);
-        } finally {
-            loadingOverlay.classList.add('hidden');
-            submitBtn.disabled = false;
+        if (result.success) {
+          showToast("✅ Data berhasil disimpan!", "success");
+          form.reset();
+          fileName.textContent = '';
+        } else {
+          throw new Error(result.message || "Gagal menyimpan data");
         }
+      } catch (error) {
+        showToast("❌ Error: " + error.message, "error");
+      } finally {
+        submitBtn.disabled = false;
+        loadingOverlay.classList.add("hidden");
+      }
     });
 
-    // Helper konversi file ke Base64
     function toBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result.split(',')[1]);
-            reader.onerror = (error) => reject(error);
-        });
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = (error) => reject(error);
+      });
     }
-       document.getElementById("btnIsiListProduk").addEventListener("click", () => {
-    window.location.href = "data_produk.html";
-});
-       // Tampilkan tanggal sekarang di header
-const currentDate = new Date();
-const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-document.getElementById("current-date").textContent = currentDate.toLocaleDateString("id-ID", options);
 
-</script>
+    // Tombol pindah ke halaman produk
+    document.getElementById("btnIsiListProduk").addEventListener("click", () => {
+      window.location.href = "data_produk.html";
+    });
 
+    // Tampilkan tanggal sekarang di header
+    const currentDate = new Date();
+    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    document.getElementById("current-date").textContent = currentDate.toLocaleDateString("id-ID", options);
+  </script>
 
 </body>
 </html>
