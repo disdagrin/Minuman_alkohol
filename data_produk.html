@@ -118,21 +118,65 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
-    <header class="wine-gradient text-white py-6">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <div class="w-14 h-14 bg-transparent rounded-full flex items-center justify-center mr-3">
-                        <img src="logo.png">
-                    </div>
-                    <h2 class="text-2xl font-bold">Sistem Manajemen Produk Minuman Beralkohol</h2>
-                </div>
-                <div class="text-xs font-bold">
-                    <span id="current-date" class="bg-white bg-opacity-0 px-0 py-1 rounded-full"></span>
-                </div>
-            </div>
-        </div>
-    </header>
+    <header class="bg-white/90 backdrop-blur-md shadow-md px-4 py-3 flex items-center justify-between relative z-20">
+  <!-- Kiri: Logo -->
+  <div class="flex items-center flex-shrink-0">
+    <img src="logo.png" alt="Logo" class="w-10 drop-shadow-md">
+  </div>
+
+  <!-- Tengah: Judul -->
+  <div class="absolute left-1/2 transform -translate-x-1/2 text-center">
+    <h1 class="text-base md:text-lg font-bold ">
+      List Produk Minuman Beralkohol
+    </h1>
+  </div>
+
+  <!-- Kanan: Tanggal & Menu -->
+  <div class="flex items-center space-x-4 text-gray-600">
+    <!-- Tanggal -->
+    <div id="tanggalJam" class="md:flex text-xs md:text-sm font-medium items-center gap-2 text-gray-700">
+      <span id="teksTanggalJam"></span>
+    </div>
+
+    <!-- Dropdown Buttons -->
+    <div class="relative z-50">
+      <button id="btnList" class="hover:text-purple-600 transition focus:outline-none">
+        <i class="fas fa-list text-lg"></i>
+      </button>
+      <div id="dropdownList" 
+           class="hidden absolute right-0 mt-2 w-44 bg-white/90 backdrop-blur-md border border-purple-100 rounded-xl shadow-xl overflow-hidden animate-fadeIn">
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50">📦 Lihat Produk</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50">➕ Tambah Produk</a>
+      </div>
+    </div>
+
+    <div class="relative z-50">
+      <button id="btnSearch" class="hover:text-purple-600 transition focus:outline-none">
+        <i class="fas fa-search text-lg"></i>
+      </button>
+      <div id="dropdownSearch" 
+           class="hidden absolute right-0 mt-2 w-44 bg-white/90 backdrop-blur-md border border-purple-100 rounded-xl shadow-xl overflow-hidden animate-fadeIn">
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50">🔍 Cari Produk</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50">🎯 Filter Data</a>
+      </div>
+    </div>
+
+    <div class="relative z-50">
+      <button id="btnSetting" class="hover:text-purple-600 transition focus:outline-none">
+        <i class="fas fa-cog text-lg"></i>
+      </button>
+      <div id="dropdownSetting" 
+           class="hidden absolute right-0 mt-2 w-44 bg-white/90 backdrop-blur-md border border-purple-100 rounded-xl shadow-xl overflow-hidden animate-fadeIn">
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50">👤 Profil</a>
+        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50">⚙ Pengaturan</a>
+        <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">🚪 Logout</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aksen Gradient bawah header -->
+  <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600"></div>
+</header>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
@@ -317,13 +361,7 @@
     // Data storage
     let products = JSON.parse(localStorage.getItem('minol_products')) || [];
 
-    // Initialize date
-    document.getElementById('current-date').textContent = new Date().toLocaleDateString('id-ID', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+    
 
     // Tab functionality
 document.querySelectorAll('.tab-button').forEach(button => {
@@ -520,6 +558,47 @@ overlay.classList.remove("hidden"); // tampilkan overlay
     }
 }
 document.getElementById('submit-btn').addEventListener('click', sendToSpreadsheet);
+
+// Fungsi toggle dropdown
+  function toggleDropdown(buttonId, dropdownId) {
+    const dropdowns = document.querySelectorAll("[id^='dropdown']");
+    dropdowns.forEach(d => {
+      if (d.id !== dropdownId) d.classList.add("hidden"); // tutup dropdown lain
+    });
+    document.getElementById(dropdownId).classList.toggle("hidden");
+  }
+
+  // Event untuk setiap tombol
+  document.getElementById("btnList").addEventListener("click", () => toggleDropdown("btnList","dropdownList"));
+  document.getElementById("btnSearch").addEventListener("click", () => toggleDropdown("btnSearch","dropdownSearch"));
+  document.getElementById("btnSetting").addEventListener("click", () => toggleDropdown("btnSetting","dropdownSetting"));
+
+  // Tutup dropdown kalau klik di luar
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".relative")) {
+      document.querySelectorAll("[id^='dropdown']").forEach(d => d.classList.add("hidden"));
+    }
+  });
+
+  
+
+function updateTime() {
+  const now = new Date();
+  const options = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  const tanggal = now.toLocaleDateString("id-ID", options);
+
+  const jam = String(now.getHours()).padStart(2, '0');
+  const menit = String(now.getMinutes()).padStart(2, '0');
+  const detik = String(now.getSeconds()).padStart(2, '0');
+  const waktu = `${jam}:${menit}:${detik}`;
+
+  document.getElementById("teksTanggalJam").textContent = `${tanggal} | ${waktu}`;
+}
+
+setInterval(updateTime, 1000);
+updateTime();
+
+
 </script>
 
 </body>
