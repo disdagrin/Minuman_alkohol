@@ -35,22 +35,22 @@
         }
                 border-radius: 0.5rem;
     }
-    #gol3 form {
+    #gol.c form {
         background-color: #ffe4e6; /* pink-100 */
         border: 2px solid #ef4444; /* red-500 */
         padding: 1rem;
         border-radius: 0.5rem;
     }
     /* Override input border color on focus per golongan */
-    .gol1 form input:focus, #gol1 form select:focus {
+    .gol.a form input:focus, #gol.a form select:focus {
         border-color: #d4af37;
         box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
     }
-    .gol2 form input:focus, #gol2 form select:focus {
+    .gol.b form input:focus, #gol.b form select:focus {
         border-color: #3b82f6;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
     }
-    .gol3 form input:focus, #gol3 form select:focus {
+    .gol.c form input:focus, #gol.c form select:focus {
         border-color: #ef4444;
         box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
     }
@@ -101,26 +101,26 @@
         <!-- Tabs Navigation -->
         <div class="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
             <div class="flex flex-wrap border-b">
-                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-blue-50 transition-colors border-b-2 border-transparent hover:border-blue-400 active" data-tab="gol1">
-                    <i class="fas fa-1 mr-2 text-amber-600"></i>Golongan 1
+                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-blue-50 transition-colors border-b-2 border-transparent hover:border-blue-400 active" data-tab="gol.a">
+                    <i class="fas fa-1 mr-2 text-amber-600"></i>Golongan A
                 <p class="mt-0,1 text-xs italic text-gray-600">*Kadar alkohol <5%</p>
                 </button>
                 
-                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-green-50 transition-colors border-b-2 border-transparent hover:border-green-400" data-tab="gol2">
-                    <i class="fas fa-2 mr-2 text-amber-600"></i>Golongan 2
+                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-green-50 transition-colors border-b-2 border-transparent hover:border-green-400" data-tab="gol.b">
+                    <i class="fas fa-2 mr-2 text-amber-600"></i>Golongan B
                 <p class="mt-0,1 text-xs italic text-gray-600">*Kadar alkohol 5% - 20%</p>
                 </button>
                 
-                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-pink-50 transition-colors border-b-2 border-transparent hover:border-pink-400" data-tab="gol3">
-                    <i class="fas fa-3 mr-2 text-amber-600"></i>Golongan 3
+                <button class="tab-button px-6 py-4 font-semibold text-gray-700 hover:bg-pink-50 transition-colors border-b-2 border-transparent hover:border-pink-400" data-tab="gol.c">
+                    <i class="fas fa-3 mr-2 text-amber-600"></i>Golongan C
                 <p class="mt-0,1 text-xs italic text-gray-600">*Kadar alkohol >20%</p>
                 </button>
                 
             </div>
 
             <!-- Golongan 1 Form -->
-            <div id="gol1" class="tab-content active p-6">
-                <form id="form-gol1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="gol.a" class="tab-content active p-6">
+                <form id="form-gol.a" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nama Produk</label>
                         <input type="text" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Wine Merlot">
@@ -150,8 +150,8 @@
             </div>
 
             <!-- Golongan 2 Form -->
-            <div id="gol2" class="tab-content p-6">
-                <form id="form-gol2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="gol.b" class="tab-content p-6">
+                <form id="form-gol.b" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nama Produk</label>
                         <input type="text" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Vodka Absolute">
@@ -181,8 +181,8 @@
             </div>
 
             <!-- Golongan 3 Form -->
-            <div id="gol3" class="tab-content p-6">
-                <form id="form-gol3" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="gol.c" class="tab-content p-6">
+                <form id="form-gol.c" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Nama Produk</label>
                         <input type="text" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Whiskey Jack Daniels">
